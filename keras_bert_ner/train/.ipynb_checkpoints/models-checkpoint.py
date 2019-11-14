@@ -4,7 +4,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from ..bert4keras.bert import set_gelu, load_pretrained_model
+from bert4keras.backend import set_gelu
+from bert4keras.bert import build_bert_model
 from keras.layers import *
 from keras.models import Model
 from keras_contrib.layers import CRF
@@ -30,7 +31,7 @@ class NER_Model(object):
         
     def build(self):
         # loading pretrained language model
-        bert_model = load_pretrained_model(
+        bert_model = build_bert_model(
             self.bert_config,
             self.bert_checkpoint,
             albert = self.albert

@@ -5,7 +5,7 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 from subprocess import call
 
-with open("Keras-Bert-Ner.md","r") as f:
+with open("README.md","r") as f:
     long_description = f.read()
 
 class Installation(install):
@@ -15,7 +15,7 @@ class Installation(install):
 
 setuptools.setup(
     name="keras_bert_ner",
-    version="0.0.3",
+    version="0.1.0",
     author="liushaoweihua",
     author_email="liushaoweihua@126.com",
     long_description=long_description,
@@ -28,7 +28,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    setup_requires=["tensorflow","keras","numpy","keras_contrib"],
-    install_requires=["tensorflow","keras","numpy","keras_contrib"],
+    setup_requires=["tensorflow","keras","numpy"],
+    install_requires=["tensorflow","keras","numpy"],
     cmdclass={'install':Installation},
 )

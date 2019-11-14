@@ -12,8 +12,8 @@ import keras
 from .processor import Processor
 from .models import NER_Model
 from .callbacks import NER_Callbacks
-from keras_contrib.losses import crf_loss
-from keras_contrib.metrics import crf_viterbi_accuracy
+from .crf_utils import CRF_Accuracy, CRF_Loss
+
 
 __all__ = ["train"]
 
@@ -85,10 +85,15 @@ def train(args):
         "numb_tags": numb_tags
     }
     model = NER_Model(model_configs).build()
+    
+    mask_tag = "X"
+    crf_loss = CRF_Loss(tag2id=tag2id, mask_tag=mask_tag).crf_loss
+    crf_accuracy = CRF_Accuracy(tag2id=tag2id, mask_tag=mask_tag).crf_accuracy
+    
     model.compile(
         optimizer=keras.optimizers.Adam(lr=args.learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-8),
         loss=crf_loss,
-        metrics=[crf_viterbi_accuracy]
+        metrics=[crf_accuracy]
     )
     
     if args.best_fit:
@@ -98,12 +103,12 @@ def train(args):
             "reduce_lr_factor": args.reduce_lr_factor,
             "save_path": save_path
         }
-        callbacks = NER_Callbacks(id2tag).best_fit_callbacks(callback_configs)
+        callbacks = NER_Callbacks(id2tag, mask_tag=mask_tag).best_fit_callbacks(callback_configs)
         epochs = args.max_epochs
     else:
-        callbacks = NER_Callbacks(id2tag).callbacks()
+        callbacks = NER_Callbacks(id2tag, mask_tag=mask_tag).callbacks()
         epochs = args.hard_epochs
-    
+
     model.fit(
         x=trains,
         y=train_tags,

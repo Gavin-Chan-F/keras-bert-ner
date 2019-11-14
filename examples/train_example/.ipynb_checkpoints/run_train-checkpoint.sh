@@ -1,4 +1,4 @@
-ALBERT_DIR="/home1/liushaoweihua/pretrained_lm/albert_tiny_250k"
+PRETRAINED_LM_DIR="/home1/liushaoweihua/pretrained_lm/albert_tiny_250k"
 DATA_DIR="../data"
 OUTPUT_DIR="../models"
 
@@ -6,9 +6,9 @@ python run_train.py \
     -train_data=${DATA_DIR}/train.txt \
     -dev_data=${DATA_DIR}/dev.txt \
     -save_path=${OUTPUT_DIR} \
-    -bert_config=${ALBERT_DIR}/albert_config_tiny.json \
-    -bert_checkpoint=${ALBERT_DIR}/albert_model.ckpt \
-    -bert_vocab=${ALBERT_DIR}/vocab.txt \
+    -bert_config=${PRETRAINED_LM_DIR}/albert_config_tiny.json \
+    -bert_checkpoint=${PRETRAINED_LM_DIR}/albert_model.ckpt \
+    -bert_vocab=${PRETRAINED_LM_DIR}/vocab.txt \
     -device_map="0" \
     -best_fit \
     -max_epochs=256 \

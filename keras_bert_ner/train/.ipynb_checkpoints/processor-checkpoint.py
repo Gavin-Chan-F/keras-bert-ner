@@ -7,7 +7,7 @@ from __future__ import print_function
 import codecs
 import json
 import numpy as np
-from ..bert4keras.utils import Tokenizer
+from bert4keras.utils import Tokenizer
 
 __all__ = ["Processor"]
 
